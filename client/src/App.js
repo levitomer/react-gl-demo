@@ -137,7 +137,9 @@ export default function App({
             initialViewState={INITIAL_VIEW_STATE}
             getTooltip={getTooltip}
             onClick={(event) => {
-                onMarkerClick(event.object.properties.id);
+                if (event.object) {
+                    onMarkerClick(event.object.properties.id);
+                }
             }}
             controller
         >
