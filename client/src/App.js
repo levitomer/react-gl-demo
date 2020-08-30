@@ -14,10 +14,6 @@ import { scaleThreshold } from 'd3-scale';
 const MAPBOX_TOKEN =
     'pk.eyJ1IjoibGV2aXRvbWVyIiwiYSI6ImNqbjFxcDUwbjF6MnQzd3F2OGRzYjF2cG0ifQ.Dcp1r_2cekfaut4RJPKdzg'; // eslint-disable-line
 
-// Source data GeoJSON
-const DATA_URL =
-    'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/geojson/vancouver-blocks.json'; // eslint-disable-line
-
 export const COLOR_SCALE = scaleThreshold()
     .domain([
         -0.6,
@@ -96,9 +92,11 @@ function getTooltip({ object }) {
 }
 
 export default function App({
-    data = DATA_URL,
+    markers,
+    onMarkerClick,
     mapStyle = 'mapbox://styles/mapbox/dark-v9',
 }) {
+    const data = { type: 'FeatureCollection', features: [...markers] };
     const [effects] = useState(() => {
         const lightingEffect = new LightingEffect({ ambientLight, dirLight });
         lightingEffect.shadowColor = [0, 0, 0, 0.5];
@@ -138,6 +136,9 @@ export default function App({
             effects={effects}
             initialViewState={INITIAL_VIEW_STATE}
             getTooltip={getTooltip}
+            onClick={(event) => {
+                onMarkerClick(event.object.properties.id);
+            }}
             controller
         >
             <StaticMap

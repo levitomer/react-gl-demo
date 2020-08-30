@@ -5,7 +5,7 @@ const markers = () => {
 };
 
 const updateMarker = (args) => {
-    const marker = data.find(({ id }) => id === args.id); // event name
+    const marker = data.find(({ properties }) => properties.id === args.id); // event name
     marker.properties.selected = true;
     return marker;
 };

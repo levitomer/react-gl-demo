@@ -15,6 +15,7 @@ server.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
     }
+
     next();
 });
 
@@ -28,6 +29,7 @@ server.use(
             }
 
             type Properties {
+                id: String!
                 valuePerSqm: Float!
                 growth: Float!
                 selected: Boolean

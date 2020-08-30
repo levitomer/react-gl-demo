@@ -8,6 +8,7 @@ export function fetchMarkers() {
                         coordinates
                     }
                     properties {
+                        id
                         valuePerSqm
                         growth
                         selected
@@ -17,7 +18,7 @@ export function fetchMarkers() {
         `,
     };
 
-    fetch('http://localhost:3000/graphql', {
+    return fetch('http://localhost:3000/graphql', {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
@@ -26,12 +27,13 @@ export function fetchMarkers() {
     })
         .then((res) => {
             if (res.status !== 200 && res.status !== 201) {
-                console.log(res.status);
                 throw new Error(`Failed with status ${res.status}`);
             }
             return res.json();
         })
-        .then((res) => res.data.markers)
+        .then((res) => {
+            return res.data.markers;
+        })
         .catch((err) => {
             console.log(err);
         });

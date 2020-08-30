@@ -11,9 +11,11 @@ const AppContainer = () => {
         dispatch(actions.fetchMapMarkers());
     }, []);
 
-    console.log('AppContainer:', markers);
+    const handleMarkerClick = (id) => {
+        dispatch(actions.updateMapMarker(id));
+    };
 
-    return <App markers={markers} />;
+    return <App markers={markers} onMarkerClick={handleMarkerClick} />;
 };
 
 export default AppContainer;

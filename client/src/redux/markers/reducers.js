@@ -18,13 +18,19 @@ const reducers = {
     },
     [types.UPDATE_MAP_MARKER]: (state, payload) => {
         // send query to update a marker in db
-        const marker = state.data.filter(({ id }) => id === payload.id);
-        if (marker.properties.selected === false) {
+        const marker = state.data.find(
+            ({ properties }) => properties.id === payload.id
+        );
+
+        if (!marker.properties.selected) {
             marker.properties.selected = true;
         } else {
             marker.properties.selected = false;
         }
-        return { ...state, data: { ...state.data, marker } };
+        return {
+            ...state,
+            data: [...state.data, marker],
+        };
     },
 };
 

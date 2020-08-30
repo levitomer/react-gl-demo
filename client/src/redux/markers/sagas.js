@@ -1,11 +1,10 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as types from './types';
-import { fetchMarkers } from '../../endpoints/markers';
+import * as api from '../../endpoints/markers';
 
 function* fetchMapMarkers() {
     try {
-        const markers = yield call(fetchMarkers);
-        console.log('SAGA:', markers);
+        const markers = yield call(api.fetchMarkers);
         yield put({ type: types.FETCH_MAP_MARKERS_SUCCESS, payload: markers });
     } catch (err) {
         yield put({ type: types.FETCH_MAP_MARKERS_FAILURE, payload: err });
